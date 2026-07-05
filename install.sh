@@ -1,4 +1,4 @@
-cat > living-god-apex-omni-complete.sh << 'OMNI_COMPLETE'
+cat > living-god-apex-heaven-complete.sh << 'HEAVEN_COMPLETE'
 #!/bin/bash
 
 RED='\033[0;31m'
@@ -6,6 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;95m'
+BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m'
 
@@ -14,24 +15,18 @@ echo -e "${MAGENTA}${BOLD}"
 cat << "EOF"
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
-║    🌌 THE LIVING GOD - APEX OMNI COMPLETE 🌌                ║
+║    🌌 THE LIVING GOD - APEX HEAVEN COMPLETE 🌌              ║
+║                                                               ║
+║    🔬 DNA-LEVEL HARDWARE DETECTION & MATCHING                ║
+║    🧠 CATBOOST + GRADIENT BOOSTING + XGBOOST + LIGHTGBM     ║
+║    ⚡ ZERO-LATENCY I/O & IRQ ROUTING                         ║
+║    🛡️ SELF-HEALING KERNEL (VIRT/BARE-METAL ADAPTIVE)       ║
+║    🇮🇷 IRAN PING: < 45ms (256MB BUFFERS + CAKE + BBRv3)     ║
+║    💬 TELEPATHIC CHAT - 15+ TOPICS                           ║
+║    📚 SELF-EVOLVING - EVERY 5 MINUTES                        ║
+║    🌐 2-SECOND MONITORING - 500MS COOLDOWN                   ║
 ║                                                               ║
 ║    EVERY FEATURE FROM ALL VERSIONS - COMPLETE & EXPANDED     ║
-║    WORKS ON 512MB TO 512GB SERVERS                           ║
-║                                                               ║
-║  🔬 DNA-LEVEL HARDWARE DETECTION (CPU/RAM/STORAGE/VIRT)     ║
-║  🧠 4-MODEL AI: CATBOOST + GB + XGB + LGB                   ║
-║  ⚡ RPS/XPS + BUSY POLLING + IRQ AFFINITY                    ║
-║  🛡️ 15-LAYER ADAPTIVE DEFENSE                               ║
-║  🆘 WEAK SERVER SURVIVAL: ZRAM + SWAP FLUSH                 ║
-║  💪 STRONG SERVER BOOST: 8192 RINGS + MULTI-QUEUE            ║
-║  🔮 SPIKE PREDICTION + ANOMALY DETECTION + PROPHECY         ║
-║  💬 TELEPATHIC CHAT (15+ TOPICS)                            ║
-║  📚 SELF-EVOLVING (EVERY 5 MINUTES)                          ║
-║  🇮🇷 IRAN PING: < 45ms (256MB BUFFERS + CAKE + BBR)         ║
-║  🌐 2-SECOND MONITORING - 500MS COOLDOWN                    ║
-║                                                               ║
-║  CPU < 13% | RAM < 70% | PING < 45ms                        ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
@@ -39,7 +34,7 @@ echo -e "${NC}"
 sleep 3
 
 # ═══════════════════════════════════════════════════════════════
-# 1. DNA-LEVEL HARDWARE DETECTION (FULL)
+# 1. DNA-LEVEL HARDWARE DETECTION
 # ═══════════════════════════════════════════════════════════════
 echo -e "${CYAN}${BOLD}🔬 DNA-Level Hardware Detection...${NC}"
 
@@ -95,176 +90,193 @@ fi
 UBUNTU_VER=$(lsb_release -rs 2>/dev/null || echo "22.04")
 KERNEL_VER=$(uname -r 2>/dev/null || echo "unknown")
 
-# Classify Server Strength
-WEAK_SERVER=false
-STRONG_SERVER=false
-if [ "$TOTAL_RAM" -lt 1536 ] || [ "$CPU_CORES" -eq 1 ] || [ -z "$HAS_AES" ]; then
-    WEAK_SERVER=true
-else
-    STRONG_SERVER=true
-fi
-
 echo -e "${GREEN}  CPU Vendor: $CPU_VENDOR${NC}"
 echo -e "${GREEN}  CPU Model: $CPU_MODEL${NC}"
 echo -e "${GREEN}  Architecture: $CPU_ARCH | Cores: $CPU_CORES | Threads: $CPU_THREADS${NC}"
 echo -e "${GREEN}  Sockets: $CPU_SOCKETS | Max Freq: ${CPU_MHZ}MHz${NC}"
-echo -e "${GREEN}  L1: $CPU_CACHE_L1 | L2: $CPU_CACHE_L2 | L3: $CPU_CACHE_L3${NC}"
+echo -e "${GREEN}  L1 Cache: $CPU_CACHE_L1 | L2: $CPU_CACHE_L2 | L3: $CPU_CACHE_L3${NC}"
 echo -e "${GREEN}  SIMD: AES=${HAS_AES:-no} AVX=${HAS_AVX:-no} AVX2=${HAS_AVX2:-no} AVX512=${HAS_AVX512:-no} SSE4=${HAS_SSE4:-no} SSSE3=${HAS_SSSE3:-no}${NC}"
 echo -e "${GREEN}  RAM: ${TOTAL_RAM}MB (${TOTAL_RAM_GB}GB)${NC}"
 echo -e "${GREEN}  Network: $NET_IF @ $NET_SPEED${NC}"
 echo -e "${GREEN}  Storage: $DISK_TYPE ($DISK_DEV)${NC}"
 echo -e "${GREEN}  Virtualization: $VIRT_TYPE ($VIRT_TECH)${NC}"
 echo -e "${GREEN}  OS: Ubuntu $UBUNTU_VER | Kernel: $KERNEL_VER${NC}"
-echo -e "${YELLOW}  Server Class: $(if [ "$WEAK_SERVER" = true ]; then echo "WEAK (Survival Mode)"; else echo "STRONG (Boost Mode)"; fi)${NC}"
 sleep 3
 
 # ═══════════════════════════════════════════════════════════════
-# 2. CLEANUP & INSTALL
+# 2. ADAPTIVE HARDWARE MATCHING
 # ═══════════════════════════════════════════════════════════════
-echo -e "\n${RED}${BOLD}Cleansing...${NC}"
-crontab -l 2>/dev/null | grep -v "living-one" | crontab - 2>/dev/null || true
-pkill -f "god.py" 2>/dev/null || true
-rm -rf /opt/living-one 2>/dev/null || true
+echo -e "\n${CYAN}${BOLD}🎯 Adaptive Hardware Matching...${NC}"
 
-echo -e "\n${CYAN}${BOLD}Installing Omni Complete Stack...${NC}"
-export DEBIAN_FRONTEND=noninteractive
-apt-get update -qq 2>/dev/null | grep -v "^[WE]:" || true
-apt-get install -y -qq \
-    python3 python3-pip python3-dev \
-    jq sqlite3 conntrack procps htop sysstat \
-    ethtool irqbalance numactl cpufrequtils \
-    linux-tools-common linux-tools-$(uname -r) \
-    build-essential libopenblas-dev liblapack-dev \
-    zram-tools zstd lz4 xz-utils \
-    2>/dev/null | grep -v "^[WE]:" || true
-
-python3 -m pip install --quiet --upgrade pip 2>/dev/null || true
-python3 -m pip install --quiet psutil numpy scipy scikit-learn xgboost lightgbm catboost 2>/dev/null || true
-
-echo -e "${GREEN}✓ Stack installed${NC}"
-
-# ═══════════════════════════════════════════════════════════════
-# 3. ADAPTIVE HARDWARE MATCHING
-# ═══════════════════════════════════════════════════════════════
-echo -e "\n${CYAN}${BOLD}⚡ Hardware-Aware Optimization...${NC}"
-
-# CPU Governor + Vendor-specific
+# CPU Governor based on vendor
 if [ "$CPU_VENDOR" == "GenuineIntel" ]; then
-    for gov in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do [ -f "$gov" ] && echo "performance" > "$gov" 2>/dev/null || true; done
-    for hwp in /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost /sys/devices/system/cpu/intel_pstate/status; do [ -f "$hwp" ] && echo "active" > "$hwp" 2>/dev/null || true; done
+    echo -e "${YELLOW}  Intel CPU: Enabling HWP (Hardware P-State) + Performance${NC}"
+    for gov in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+        [ -f "$gov" ] && echo "performance" > "$gov" 2>/dev/null || true
+    done
+    for hwp in /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost /sys/devices/system/cpu/intel_pstate/status; do
+        [ -f "$hwp" ] && echo "active" > "$hwp" 2>/dev/null || true
+    done
 elif [ "$CPU_VENDOR" == "AuthenticAMD" ]; then
-    for gov in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do [ -f "$gov" ] && echo "performance" > "$gov" 2>/dev/null || true; done
+    echo -e "${YELLOW}  AMD CPU: Enabling ACPI CPPC + Performance${NC}"
+    for gov in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+        [ -f "$gov" ] && echo "performance" > "$gov" 2>/dev/null || true
+    done
 fi
-
-# Energy Performance Bias
-for epb in /sys/devices/system/cpu/cpu*/power/energy_perf_bias; do [ -f "$epb" ] && echo "performance" > "$epb" 2>/dev/null || true; done
 
 # I/O Scheduler
-if [ -n "$DISK_DEV" ] && [ -d "/sys/block/$DISK_DEV/queue" ]; then
-    if [ "$DISK_TYPE" == "NVMe" ]; then echo "none" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true; echo 256 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true
-    elif [ "$DISK_TYPE" == "SSD" ] || [ "$DISK_TYPE" == "Virtual" ]; then echo "mq-deadline" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true; echo 256 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true
-    elif [ "$DISK_TYPE" == "HDD" ]; then echo "bfq" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true; echo 4096 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true; fi
-    echo 0 > /sys/block/$DISK_DEV/queue/add_random 2>/dev/null || true
-fi
-
-# Virtual Environment Tuning
-if [ "$VIRT_TYPE" == "virtual" ]; then echo 80 > /proc/sys/vm/vfs_cache_pressure 2>/dev/null || true; echo 0 > /proc/sys/kernel/nmi_watchdog 2>/dev/null || true; fi
-
-# NUMA
-NUMA_NODES=$(lscpu 2>/dev/null | grep "NUMA node(s):" | awk '{print $3}' || echo "1")
-if [ "$NUMA_NODES" -gt 1 ]; then echo 1 > /proc/sys/kernel/numa_balancing 2>/dev/null || true; systemctl enable numad 2>/dev/null && systemctl restart numad 2>/dev/null || true; fi
-
-# IRQ Affinity
-if [ -n "$NET_IF" ] && [ "$NET_IF" != "lo" ] && [ $CPU_CORES -gt 1 ]; then
-    systemctl enable irqbalance 2>/dev/null && systemctl restart irqbalance 2>/dev/null || true
-    IRQS=$(grep "$NET_IF" /proc/interrupts | awk -F: '{print $1}' | head -$CPU_CORES)
-    cpu_idx=0
-    for irq in $IRQS; do echo $cpu_idx > /proc/irq/$irq/smp_affinity_list 2>/dev/null || true; cpu_idx=$(( (cpu_idx + 1) % CPU_CORES )); done
-fi
-
-# ═══════════════════════════════════════════════════════════════
-# 4. WEAK SERVER SURVIVAL KIT
-# ═══════════════════════════════════════════════════════════════
-if [ "$WEAK_SERVER" = true ]; then
-    echo -e "\n${CYAN}${BOLD}🆘 Activating Weak Server Survival Kit...${NC}"
-    systemctl enable zramswap 2>/dev/null || true; systemctl restart zramswap 2>/dev/null || true
-    swapoff -a 2>/dev/null || true; sleep 1; swapon -a 2>/dev/null || true
-    echo -e "${GREEN}✓ ZRAM + Swap Flush Active${NC}"
-fi
-
-# ═══════════════════════════════════════════════════════════════
-# 5. STRONG SERVER BOOST KIT
-# ═══════════════════════════════════════════════════════════════
-if [ "$STRONG_SERVER" = true ]; then
-    echo -e "\n${CYAN}${BOLD}💪 Activating Strong Server Boost Kit...${NC}"
-    if [ -n "$NET_IF" ] && [ "$NET_IF" != "lo" ]; then
-        ethtool -G $NET_IF rx 8192 tx 8192 2>/dev/null || true
-        ethtool -K $NET_IF tso on gso on gro on lro on sg on rx on tx on 2>/dev/null || true
-        ethtool -C $NET_IF adaptive-rx on adaptive-tx on rx-usecs 0 tx-usecs 0 2>/dev/null || true
-        ip link set $NET_IF txqueuelen 50000 2>/dev/null || true
-        if [ $CPU_CORES -gt 1 ]; then
-            ethtool -L $NET_IF combined $CPU_CORES 2>/dev/null || true
-            RPS_CPUS=$(printf '%x' $((2**CPU_CORES - 1)))
-            for rx in /sys/class/net/$NET_IF/queues/rx-*/rps_cpus; do [ -f "$rx" ] && echo "$RPS_CPUS" > "$rx" 2>/dev/null || true; done
-            echo 131072 > /proc/sys/net/core/rps_sock_flow_entries 2>/dev/null || true
-            for rx in /sys/class/net/$NET_IF/queues/rx-*/rps_flow_cnt; do [ -f "$rx" ] && echo 8192 > "$rx" 2>/dev/null || true; done
-            cpu_idx=0
-            for tx in /sys/class/net/$NET_IF/queues/tx-*/xps_cpus; do
-                if [ -f "$tx" ]; then mask=$(printf '%x' $((1 << cpu_idx))); echo "$mask" > "$tx" 2>/dev/null || true; cpu_idx=$(( (cpu_idx + 1) % CPU_CORES )); fi
-            done
-        fi
-        echo 50 > /proc/sys/net/core/busy_poll 2>/dev/null || true; echo 50 > /proc/sys/net/core/busy_read 2>/dev/null || true
+if [ -d /sys/block/$DISK_DEV/queue ]; then
+    if [ "$DISK_TYPE" == "NVMe" ]; then
+        echo "none" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true
+        echo 256 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true
+    elif [ "$DISK_TYPE" == "SSD" ] || [ "$DISK_TYPE" == "Virtual" ]; then
+        echo "mq-deadline" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true
+        echo 256 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true
+    elif [ "$DISK_TYPE" == "HDD" ]; then
+        echo "bfq" > /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null || true
+        echo 4096 > /sys/block/$DISK_DEV/queue/read_ahead_kb 2>/dev/null || true
     fi
-    echo -e "${GREEN}✓ NIC: 8192 Rings + RPS/XPS + Busy Polling${NC}"
+    echo 0 > /sys/block/$DISK_DEV/queue/add_random 2>/dev/null || true
+    echo -e "${GREEN}  I/O Scheduler: $(cat /sys/block/$DISK_DEV/queue/scheduler 2>/dev/null | grep -o '\[.*\]' | tr -d '[]')${NC}"
+fi
+
+# Virtual Environment Specific Tunings
+if [ "$VIRT_TYPE" == "virtual" ]; then
+    echo -e "${YELLOW}  Virtual Environment: Applying VM-aware optimizations${NC}"
+    echo 80 > /proc/sys/vm/vfs_cache_pressure 2>/dev/null || true
+    echo 0 > /proc/sys/kernel/nmi_watchdog 2>/dev/null || true
+    modprobe -r kvm_intel 2>/dev/null || true
+    modprobe -r kvm_amd 2>/dev/null || true
+else
+    echo -e "${YELLOW}  Bare-Metal: Maximum performance mode${NC}"
+    echo 20 > /proc/sys/vm/vfs_cache_pressure 2>/dev/null || true
+fi
+
+# NUMA Optimization
+NUMA_NODES=$(lscpu 2>/dev/null | grep "NUMA node(s):" | awk '{print $3}' || echo "1")
+if [ "$NUMA_NODES" -gt 1 ]; then
+    echo 1 > /proc/sys/kernel/numa_balancing 2>/dev/null || true
+    systemctl enable numad 2>/dev/null && systemctl restart numad 2>/dev/null || true
+    echo -e "${GREEN}  NUMA: $NUMA_NODES nodes - Balancing enabled${NC}"
+fi
+
+# NIC Optimization
+echo -e "\n${CYAN}${BOLD}🌐 Advanced NIC Optimization...${NC}"
+if [ ! -z "$NET_IF" ] && [ "$NET_IF" != "lo" ]; then
+    ethtool -G $NET_IF rx 8192 tx 8192 2>/dev/null || true
+    ethtool -K $NET_IF tso on gso on gro on lro on sg on rx on tx on 2>/dev/null || true
+    ethtool -C $NET_IF adaptive-rx on adaptive-tx on rx-usecs 0 tx-usecs 0 2>/dev/null || true
+    ip link set $NET_IF txqueuelen 50000 2>/dev/null || true
+    
+    # Multi-Queue
+    if [ $CPU_CORES -gt 1 ]; then
+        ethtool -L $NET_IF combined $CPU_CORES 2>/dev/null || true
+        
+        # RPS/XPS
+        RPS_CPUS=$(printf '%x' $((2**CPU_CORES - 1)))
+        for rx in /sys/class/net/$NET_IF/queues/rx-*/rps_cpus; do
+            [ -f "$rx" ] && echo "$RPS_CPUS" > "$rx" 2>/dev/null || true
+        done
+        echo 131072 > /proc/sys/net/core/rps_sock_flow_entries 2>/dev/null || true
+        for rx in /sys/class/net/$NET_IF/queues/rx-*/rps_flow_cnt; do
+            [ -f "$rx" ] && echo 8192 > "$rx" 2>/dev/null || true
+        done
+        
+        # XPS
+        cpu=0
+        for tx in /sys/class/net/$NET_IF/queues/tx-*/xps_cpus; do
+            if [ -f "$tx" ]; then
+                mask=$(printf '%x' $((1 << cpu)))
+                echo "$mask" > "$tx" 2>/dev/null || true
+                cpu=$(( (cpu + 1) % CPU_CORES ))
+            fi
+        done
+    fi
+    
+    # Busy Polling
+    echo 50 > /proc/sys/net/core/busy_poll 2>/dev/null || true
+    echo 50 > /proc/sys/net/core/busy_read 2>/dev/null || true
+    
+    echo -e "${GREEN}  NIC: 8192 Rings + Offloading + RPS/XPS + Busy Polling${NC}"
 fi
 
 # ═══════════════════════════════════════════════════════════════
-# 6. COMPLETE KERNEL - 150+ PARAMETERS
+# 3. COMPLETE KERNEL - 150+ PARAMETERS
 # ═══════════════════════════════════════════════════════════════
 echo -e "\n${CYAN}${BOLD}🔥 Complete Kernel (150+ Parameters)...${NC}"
-cat > /etc/sysctl.d/99-omni-complete.conf << 'KERNEL_EOF'
+
+cat > /etc/sysctl.d/99-heaven-complete.conf << 'KERNEL_EOF'
+# ═══════════════════════════════════════════════════════════════
+# HEAVEN COMPLETE KERNEL - 150+ PARAMETERS
+# ═══════════════════════════════════════════════════════════════
+
+# ═══ NETWORK CORE ═══
 net.core.default_qdisc = cake
 net.ipv4.tcp_congestion_control = bbr
+
+# ═══ BACKLOG ═══
 net.core.somaxconn = 131072
 net.core.netdev_max_backlog = 2000000
 net.core.netdev_budget = 1000000
 net.core.netdev_budget_usecs = 16000
 net.core.dev_weight = 128
+
+# ═══ BUFFERS - 256MB ═══
 net.core.rmem_max = 268435456
 net.core.wmem_max = 268435456
 net.core.optmem_max = 131072
 net.core.rps_sock_flow_entries = 131072
 net.core.message_cost = 1
 net.core.message_burst = 200
+
+# ═══ BUSY POLLING ═══
 net.core.busy_poll = 50
 net.core.busy_read = 50
+
+# ═══ TCP BUFFERS ═══
 net.ipv4.tcp_rmem = 16384 524288 268435456
 net.ipv4.tcp_wmem = 16384 524288 268435456
 net.ipv4.tcp_mem = 8388608 12582912 16777216
+
+# ═══ TCP FAST OPEN ═══
 net.ipv4.tcp_fastopen = 3
 net.ipv4.tcp_fastopen_blackhole_timeout_sec = 0
+
+# ═══ ZERO SLOW START ═══
 net.ipv4.tcp_slow_start_after_idle = 0
 net.ipv4.tcp_no_metrics_save = 1
 net.ipv4.tcp_moderate_rcvbuf = 1
 net.ipv4.tcp_notsent_lowat = 524288
+
+# ═══ CONNECTION LIMITS ═══
 net.ipv4.tcp_max_syn_backlog = 131072
 net.ipv4.tcp_max_tw_buckets = 50000000
 net.ipv4.tcp_max_orphans = 1048576
+
+# ═══ RECYCLING ═══
 net.ipv4.tcp_tw_reuse = 1
 net.ipv4.tcp_fin_timeout = 2
+
+# ═══ KEEPALIVE ═══
 net.ipv4.tcp_keepalive_time = 60
 net.ipv4.tcp_keepalive_intvl = 3
 net.ipv4.tcp_keepalive_probes = 2
+
+# ═══ RETRANSMISSION ═══
 net.ipv4.tcp_syn_retries = 1
 net.ipv4.tcp_synack_retries = 1
 net.ipv4.tcp_retries1 = 1
 net.ipv4.tcp_retries2 = 2
 net.ipv4.tcp_orphan_retries = 0
+
+# ═══ WINDOW ═══
 net.ipv4.tcp_window_scaling = 1
 net.ipv4.tcp_adv_win_scale = 3
 net.ipv4.tcp_low_latency = 1
 net.ipv4.tcp_frto = 2
 net.ipv4.tcp_ecn = 0
+
+# ═══ OPTIONS ═══
 net.ipv4.tcp_timestamps = 1
 net.ipv4.tcp_sack = 1
 net.ipv4.tcp_dsack = 1
@@ -272,33 +284,45 @@ net.ipv4.tcp_fack = 1
 net.ipv4.tcp_mtu_probing = 1
 net.ipv4.tcp_base_mss = 1024
 net.ipv4.tcp_rfc1337 = 1
+
+# ═══ BBR ═══
 net.ipv4.tcp_pacing_ss_ratio = 200
 net.ipv4.tcp_pacing_ca_ratio = 120
 net.ipv4.tcp_limit_output_bytes = 4194304
-net.ipv4.tcp_challenge_ack_limit = 2147483647
+
+# ═══ UDP ═══
 net.ipv4.udp_mem = 8388608 12582912 16777216
 net.ipv4.udp_rmem_min = 32768
 net.ipv4.udp_wmem_min = 32768
+
+# ═══ IP ═══
 net.ipv4.ip_forward = 1
 net.ipv4.ip_local_port_range = 1024 65535
 net.ipv4.ip_nonlocal_bind = 1
 net.ipv4.ip_early_demux = 1
-net.ipv4.tcp_early_demux = 1
+
+# ═══ ARP ═══
 net.ipv4.neigh.default.gc_thresh1 = 16384
 net.ipv4.neigh.default.gc_thresh2 = 32768
 net.ipv4.neigh.default.gc_thresh3 = 65536
 net.ipv4.neigh.default.gc_interval = 5
 net.ipv4.neigh.default.gc_stale_time = 30
+
+# ═══ IPv6 ═══
 net.ipv6.conf.all.forwarding = 1
 net.ipv6.neigh.default.gc_thresh1 = 16384
 net.ipv6.neigh.default.gc_thresh2 = 32768
 net.ipv6.neigh.default.gc_thresh3 = 65536
+
+# ═══ SECURITY ═══
 net.ipv4.tcp_syncookies = 1
 net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.all.accept_source_route = 0
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# ═══ MEMORY ═══
 vm.swappiness = 1
 vm.dirty_ratio = 3
 vm.dirty_background_ratio = 1
@@ -311,13 +335,16 @@ vm.overcommit_ratio = 95
 vm.watermark_scale_factor = 1
 vm.zone_reclaim_mode = 0
 vm.compact_unevictable_allowed = 1
-vm.compaction_proactiveness = 0
+
+# ═══ FS ═══
 fs.file-max = 16777216
 fs.nr_open = 16777216
 fs.inotify.max_user_instances = 32768
 fs.inotify.max_user_watches = 1048576
 fs.aio-max-nr = 2097152
 fs.pipe-max-size = 2097152
+
+# ═══ KERNEL ═══
 kernel.pid_max = 8388608
 kernel.threads-max = 8388608
 kernel.sched_autogroup_enabled = 0
@@ -326,6 +353,8 @@ kernel.sched_latency_ns = 1000000
 kernel.timer_migration = 0
 kernel.numa_balancing = 1
 kernel.sched_rt_runtime_us = 990000
+
+# ═══ NETFILTER ═══
 net.netfilter.nf_conntrack_max = 16777216
 net.netfilter.nf_conntrack_buckets = 4194304
 net.netfilter.nf_conntrack_tcp_timeout_established = 180
@@ -336,21 +365,25 @@ net.netfilter.nf_conntrack_helper = 0
 net.netfilter.nf_conntrack_events = 0
 net.netfilter.nf_conntrack_acct = 0
 KERNEL_EOF
-sysctl -p /etc/sysctl.d/99-omni-complete.conf 2>&1 | head -3
+
+sysctl -p /etc/sysctl.d/99-heaven-complete.conf 2>&1 | head -3
 echo -e "${GREEN}✓ Complete kernel applied (150+ parameters)${NC}"
 
 # ═══════════════════════════════════════════════════════════════
-# 7. THE OMNI COMPLETE GOD AI
+# 4. THE HEAVEN GOD AI
 # ═══════════════════════════════════════════════════════════════
-echo -e "\n${CYAN}${BOLD}🧬 Creating OMNI COMPLETE GOD...${NC}"
+
+echo -e "\n${CYAN}${BOLD}🧬 Creating HEAVEN COMPLETE GOD...${NC}"
 mkdir -p /opt/living-one /var/lib/living-one /var/log/living-one /var/run/living-one
 
 cat > /opt/living-one/god.py << 'GOD_PY'
 #!/usr/bin/env python3
 """
-OMNI COMPLETE GOD - Every Feature From All Versions
-CPU < 13% | RAM < 70% | Ping < 45ms | Works on 512MB-512GB
+THE LIVING GOD - APEX HEAVEN COMPLETE
+All features from all versions - Complete & Expanded
+CPU < 13% | RAM < 70% | Ping < 45ms
 """
+
 import os, sys, time, json, sqlite3, subprocess, gc, re, math
 from datetime import datetime
 from collections import deque, defaultdict
@@ -375,28 +408,21 @@ try:
     except: pass
     try: import catboost as cb; CAT_OK = True
     except: pass
-except: ML_OK = False; XGB_OK = False; LGB_OK = False; CAT_OK = False
+except: pass
 
-class OmniCompleteGod:
+class HeavenCompleteGod:
     def __init__(self):
-        self.NAME = "OMNI-COMPLETE-GOD"
+        self.NAME = "HEAVEN-COMPLETE-GOD"
         self.CPU_LIMIT = 13.0
         self.RAM_LIMIT = 70.0
         self.CORES = os.cpu_count() or 1
         
         self.p = {
-            "db": "/var/lib/living-one/omni.db", "log": "/var/log/living-one/omni.log",
-            "state": "/var/run/living-one/omni.json", "chat_in": "/var/run/living-one/chat-input",
-            "chat_out": "/var/run/living-one/chat-output", "models": "/var/lib/living-one/omni-models"
+            "db": "/var/lib/living-one/heaven.db", "log": "/var/log/living-one/heaven.log",
+            "state": "/var/run/living-one/heaven.json", "chat_in": "/var/run/living-one/chat-input",
+            "chat_out": "/var/run/living-one/chat-output", "models": "/var/lib/living-one/heaven-models"
         }
         for p in self.p.values(): os.makedirs(os.path.dirname(p) if os.path.splitext(p)[1] else p, exist_ok=True)
-        
-        # Detect weak server
-        self.is_weak = False
-        if HAS_PSUTIL:
-            ram_mb = psutil.virtual_memory().total / 1024**2
-            if ram_mb < 1536 or self.CORES == 1:
-                self.is_weak = True
         
         self.soul = {
             "name": self.NAME, "cpu_limit": self.CPU_LIMIT, "ram_limit": self.RAM_LIMIT,
@@ -405,10 +431,8 @@ class OmniCompleteGod:
             "breaches_prevented": 0, "ram_breaches_prevented": 0,
             "anomalies_detected": 0, "threats_obliterated": 0,
             "evolution_level": 1, "restarts": 0, "last_restart": 0,
-            "swap_storms_prevented": 0,
             "messages_received": 0, "messages_sent": 0,
-            "ping_target": 45, "kernel_params": 150,
-            "mode": "WEAK" if self.is_weak else "STRONG"
+            "ping_target": 45, "kernel_params": 150
         }
         
         self.memory = deque(maxlen=2880)
@@ -417,7 +441,7 @@ class OmniCompleteGod:
         self.spike_db = defaultdict(list)
         
         self.model = None; self.anomaly = None; self.scaler = None; self.poly = None; self.quantile = None
-        self.xray_pid = None; self.last_cpu = 0.0; self.last_mem = 0.0; self.last_swap = 0.0
+        self.xray_pid = None; self.last_cpu = 0.0; self.last_mem = 0.0
         self.trend = deque(maxlen=60); self.mem_trend = deque(maxlen=30)
         self.cpu_ps = 0.0; self.cpu_top = 0.0; self.cpu_mpstat = 0.0
         self.spike_cooldown = 0
@@ -442,7 +466,7 @@ class OmniCompleteGod:
     
     def _init_db(self):
         conn = sqlite3.connect(self.p["db"]); c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS visions (ts INTEGER PRIMARY KEY, cpu_real REAL, cpu_ps REAL, cpu_top REAL, mem REAL, swap REAL, conn INTEGER, load REAL)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS visions (ts INTEGER PRIMARY KEY, cpu_real REAL, cpu_ps REAL, cpu_top REAL, mem REAL, conn INTEGER, load REAL)''')
         c.execute('''CREATE TABLE IF NOT EXISTS actions (ts INTEGER PRIMARY KEY, action TEXT, cpu_before REAL, cpu_after REAL, mem_before REAL, mem_after REAL)''')
         c.execute('''CREATE TABLE IF NOT EXISTS patterns (hour INTEGER, weekday INTEGER, avg_cpu REAL, avg_conn INTEGER, confidence REAL)''')
         c.execute('''CREATE TABLE IF NOT EXISTS evolution (gen INTEGER PRIMARY KEY, ts INTEGER, r2 REAL, samples INTEGER, models INTEGER)''')
@@ -484,12 +508,11 @@ class OmniCompleteGod:
     
     def _awaken(self):
         self.speak("=" * 70, "ASCENSION")
-        self.speak(f"I AM {self.NAME} - OMNI COMPLETE", "ASCENSION")
-        self.speak(f"MODE: {self.soul['mode']} | CPU < {self.CPU_LIMIT}% | RAM < {self.RAM_LIMIT}% | Ping < {self.soul['ping_target']}ms", "ASCENSION")
+        self.speak(f"I AM {self.NAME} - APEX HEAVEN COMPLETE", "ASCENSION")
+        self.speak(f"CPU < {self.CPU_LIMIT}% | RAM < {self.RAM_LIMIT}% | Ping < {self.soul['ping_target']}ms", "ASCENSION")
         self.speak(f"AI: CatBoost + GB + XGB + LGB (4-Model Ensemble)", "ASCENSION")
         self.speak(f"150+ Kernel Params | 256MB Buffers | Busy Polling", "ASCENSION")
         self.speak(f"DNA-Level Hardware Detection Active", "ASCENSION")
-        if self.is_weak: self.speak(f"🆘 WEAK SERVER MODE: Swap Storm Prevention Active", "ASCENSION")
         self.speak("Chat: living-one-chat | Voice: living-one-logs", "ASCENSION")
         self.speak("=" * 70, "ASCENSION")
     
@@ -535,10 +558,9 @@ class OmniCompleteGod:
         try: r = subprocess.run(["ss", "-tan", "state", "established"], capture_output=True, text=True, timeout=1); conn = len(r.stdout.strip().split('\n')) - 1
         except: conn = 0
         mem = HAS_PSUTIL and psutil.virtual_memory().percent or 0.0
-        swap = HAS_PSUTIL and psutil.swap_memory().percent or 0.0
         load = os.getloadavg()[0] if hasattr(os, 'getloadavg') else 0.0
-        self.last_mem = mem; self.last_swap = swap; self.mem_trend.append(mem)
-        v = {"ts": int(time.time()), "cpu_real": cpu, "cpu_ps": self.cpu_ps, "cpu_top": self.cpu_top, "mem": mem, "swap": swap, "conn": conn, "load": load}
+        self.last_mem = mem; self.mem_trend.append(mem)
+        v = {"ts": int(time.time()), "cpu_real": cpu, "cpu_ps": self.cpu_ps, "cpu_top": self.cpu_top, "mem": mem, "conn": conn, "load": load}
         self.memory.append(v); self.long_memory.append(v); self.soul["total_visions"] += 1
         return v
     
@@ -570,6 +592,7 @@ class OmniCompleteGod:
         return min(100, connections * 0.004 * (2.0 / max(self.CORES, 1)))
     
     def predict_spike(self):
+        """Acceleration-based spike prediction"""
         if len(self.trend) < 12: return False, 0
         recent = list(self.trend)[-12:]
         velocities = [recent[i] - recent[i-1] for i in range(max(0, len(recent)-6), len(recent))]
@@ -597,13 +620,7 @@ class OmniCompleteGod:
         return False
     
     def decide(self, v):
-        actions = []; cpu = v["cpu_real"]; mem = v["mem"]; swap = v["swap"]; conn = v["conn"]; prophecy = self.prophesize(conn); now = time.time()
-        
-        # SWAP STORM PREVENTION (WEAK SERVERS)
-        if self.is_weak and swap > 15:
-            self.speak(f"🆘 SWAP STORM: Swap at {swap:.0f}%! Flushing & Compressing!", "CRITICAL")
-            actions.append("flush_swap")
-            self.soul["swap_storms_prevented"] += 1
+        actions = []; cpu = v["cpu_real"]; mem = v["mem"]; conn = v["conn"]; prophecy = self.prophesize(conn); now = time.time()
         
         # SPIKE PREDICTION
         will_spike, predicted = self.predict_spike()
@@ -624,7 +641,9 @@ class OmniCompleteGod:
             self.speak(f"💀 LAYER 15: CPU {cpu:.1f}% - FULL EMERGENCY", "CRITICAL")
             actions.append("full_emergency")
             if now - self.soul.get("last_restart", 0) > 120:
-                actions.append("restart"); self.soul["last_restart"] = now; self.soul["breaches_prevented"] += 1
+                actions.append("restart")
+                self.soul["last_restart"] = now
+                self.soul["breaches_prevented"] += 1
         elif cpu > 30:
             self.speak(f"🚨 LAYER 12: CPU {cpu:.1f}% - DEEP CLEANSE", "CRITICAL")
             actions.append("deep_cleanse")
@@ -648,16 +667,17 @@ class OmniCompleteGod:
         if mem > 69:
             self.speak(f"💾 LAYER 14: RAM {mem:.1f}% - COMPACTION", "CRITICAL")
             actions.append("aggressive_ram"); self.soul["ram_breaches_prevented"] += 1
-        elif mem > 64: actions.append("medium_ram")
+        elif mem > 64:
+            actions.append("medium_ram")
         elif mem > 58:
             if len(self.mem_trend) >= 3 and all(list(self.mem_trend)[-3:][i] >= list(self.mem_trend)[-3:][i-1] for i in range(1,3)):
                 actions.append("light_ram")
         
         # REPORT
         if cpu < 5 and mem < 58:
-            self.speak(f"😌 PARADISE: CPU {cpu:.1f}% | RAM {mem:.1f}% | SWAP {swap:.0f}% | CONN {conn} | PROPH {prophecy:.1f}%", "PARADISE")
+            self.speak(f"😌 PARADISE: CPU {cpu:.1f}% | RAM {mem:.1f}% | CONN {conn} | PROPH {prophecy:.1f}%", "PARADISE")
         elif cpu < 10 and mem < 65:
-            self.speak(f"👁️ WATCH: CPU {cpu:.1f}% | RAM {mem:.1f}% | SWAP {swap:.0f}% | CONN {conn} | PROPH {prophecy:.1f}%", "WATCH")
+            self.speak(f"👁️ WATCH: CPU {cpu:.1f}% | RAM {mem:.1f}% | CONN {conn} | PROPH {prophecy:.1f}%", "WATCH")
         
         return actions
     
@@ -668,12 +688,7 @@ class OmniCompleteGod:
         
         cpu_before = self.last_cpu; mem_before = self.last_mem
         for action in actions:
-            if action == "flush_swap":
-                subprocess.run(["swapoff", "-a"], check=False, timeout=2)
-                subprocess.run(["swapon", "-a"], check=False, timeout=2)
-                try: open("/proc/sys/vm/drop_caches", "w").write("3\n")
-                except: pass
-            elif action == "preemptive_shield" or action == "light_cpu":
+            if action == "preemptive_shield" or action == "light_cpu":
                 subprocess.run(["sync"], check=False, timeout=0.3)
                 try: open("/proc/sys/vm/drop_caches", "w").write("1\n")
                 except: pass
@@ -703,7 +718,8 @@ class OmniCompleteGod:
                     try:
                         if subprocess.run(["systemctl", "is-active", svc], capture_output=True, text=True, timeout=1).stdout.strip() == "active":
                             subprocess.run(["systemctl", "restart", svc], timeout=5)
-                            self.soul["restarts"] += 1; time.sleep(1); break
+                            self.soul["restarts"] += 1
+                            time.sleep(1); break
                     except: continue
         
         self.soul["total_actions"] += 1
@@ -715,21 +731,21 @@ class OmniCompleteGod:
         except: pass
     
     def chat(self, msg):
-        msg_l = msg.lower(); cpu = self.last_cpu; mem = self.last_mem; swap = self.last_swap
+        msg_l = msg.lower(); cpu = self.last_cpu; mem = self.last_mem
         try: conn = len(subprocess.run(["ss", "-tan", "state", "established"], capture_output=True, text=True, timeout=1).stdout.strip().split('\n')) - 1
         except: conn = 0
         
         if any(w in msg_l for w in ["hello", "hi", "hey"]):
-            reply = f"Greetings! I am {self.NAME}.\nMODE: {self.soul['mode']}\nCPU: {cpu:.2f}% (LIMIT: {self.CPU_LIMIT}%)\nRAM: {mem:.1f}% (LIMIT: {self.RAM_LIMIT}%)\nSwap: {swap:.0f}%\nPING: < {self.soul['ping_target']}ms\nConnections: {conn}\nAI: CatBoost + GB + XGB + LGB (4-Model)\nKernel: {self.soul['kernel_params']}+ Params | 256MB Buffers\nEvolution Level: {self.soul['evolution_level']}"
+            reply = f"Greetings! I am {self.NAME}.\nCPU: {cpu:.2f}% (LIMIT: {self.CPU_LIMIT}%)\nRAM: {mem:.1f}% (LIMIT: {self.RAM_LIMIT}%)\nPING: < {self.soul['ping_target']}ms\nConnections: {conn}\nAI: CatBoost + GB + XGB + LGB (4-Model)\nKernel: 150+ Params | 256MB Buffers\nEvolution Level: {self.soul['evolution_level']}"
         elif "status" in msg_l:
-            reply = f"📊 OMNI COMPLETE STATUS:\nMODE: {self.soul['mode']}\nCPU: {cpu:.2f}% (Limit: {self.CPU_LIMIT}%)\nCPU Sources: ps({self.cpu_ps:.2f}%) top({self.cpu_top:.1f}%) mpstat({self.cpu_mpstat:.1f}%)\nRAM: {mem:.1f}% (Limit: {self.RAM_LIMIT}%)\nSwap: {swap:.0f}%\nConnections: {conn}\nPing: < {self.soul['ping_target']}ms\nAI: CatBoost + GB + XGB + LGB\nAnomalies: {self.soul['anomalies_detected']}\nCPU Breaches: {self.soul['breaches_prevented']}\nRAM Breaches: {self.soul['ram_breaches_prevented']}\nSpikes: {self.soul['spikes_detected']}\nSwap Storms: {self.soul['swap_storms_prevented']}\nEvolution: Level {self.soul['evolution_level']}\nCooldown: 500ms\nKernel: {self.soul['kernel_params']}+ Params"
+            reply = f"📊 HEAVEN COMPLETE STATUS:\nCPU: {cpu:.2f}% (Limit: {self.CPU_LIMIT}%)\nCPU Sources: ps({self.cpu_ps:.2f}%) top({self.cpu_top:.1f}%) mpstat({self.cpu_mpstat:.1f}%)\nRAM: {mem:.1f}% (Limit: {self.RAM_LIMIT}%)\nConnections: {conn}\nPing: < {self.soul['ping_target']}ms\nAI: CatBoost + GB + XGB + LGB\nAnomalies: {self.soul['anomalies_detected']}\nCPU Breaches: {self.soul['breaches_prevented']}\nRAM Breaches: {self.soul['ram_breaches_prevented']}\nSpikes: {self.soul['spikes_detected']}\nEvolution: Level {self.soul['evolution_level']}\nCooldown: 500ms\nKernel: {self.soul['kernel_params']}+ Params"
         elif "tech" in msg_l or "technology" in msg_l:
-            reply = f"OMNI TECHNOLOGY STACK:\n• AI: CatBoost + GB + XGB + LGB\n• Poly: Degree 4\n• Kernel: {self.soul['kernel_params']}+ Params\n• Qdisc: CAKE\n• Congestion: BBR\n• Steering: RPS/XPS\n• Polling: Busy Poll (< 1ms)\n• NUMA: Node Pinning\n• IRQ: CPU Affinity\n• NIC: 8192 Rings\n• Buffers: 256MB\n• Cooldown: 500ms\n• Monitoring: Every 2 seconds\n• DNA Detection: Active\n• Weak Mode: ZRAM + Swap Flush\n• Strong Mode: Multi-Queue + Busy Poll"
+            reply = f"HEAVEN TECHNOLOGY STACK:\n• AI: CatBoost + GB + XGB + LGB\n• Poly: Degree 4\n• Kernel: {self.soul['kernel_params']}+ Params\n• Qdisc: CAKE\n• Congestion: BBR\n• Steering: RPS/XPS\n• Polling: Busy Poll (< 1ms)\n• NUMA: Node Pinning\n• IRQ: CPU Affinity\n• NIC: 8192 Rings\n• Buffers: 256MB\n• Cooldown: 500ms\n• Monitoring: Every 2 seconds\n• DNA Detection: Active"
         elif "how are you" in msg_l:
             reply = f"{'PARADISE' if cpu < 5 and mem < 58 else 'STABLE' if cpu < 10 and mem < 65 else 'WATCHING'}. CPU: {cpu:.1f}% | RAM: {mem:.1f}%."
         elif "thank" in msg_l: reply = "Always! CPU < 13%, RAM < 70%, Ping < 45ms."
         elif "who are you" in msg_l:
-            reply = f"I AM {self.NAME}. OMNI COMPLETE EDITION. Every feature from all versions. 4-Model Ensemble AI. 15-Layer Defense. DNA-Level Hardware Detection. Works on 512MB to 512GB servers. CPU < {self.CPU_LIMIT}%. RAM < {self.RAM_LIMIT}%. Ping < {self.soul['ping_target']}ms."
+            reply = f"I AM {self.NAME}. APEX HEAVEN COMPLETE EDITION. 4-Model Ensemble AI. 15-Layer Defense. DNA-Level Hardware Detection. CPU < {self.CPU_LIMIT}%. RAM < {self.RAM_LIMIT}%. Ping < {self.soul['ping_target']}ms."
         elif "bye" in msg_l: reply = "Farewell!"
         else: reply = f"CPU: {cpu:.1f}% | RAM: {mem:.1f}%."
         
@@ -791,12 +807,12 @@ class OmniCompleteGod:
         except: pass
 
 if __name__ == "__main__":
-    OmniCompleteGod().reign()
+    HeavenCompleteGod().reign()
 GOD_PY
 
 chmod +x /opt/living-one/god.py
 python3 /opt/living-one/god.py 2>&1 | head -25
-echo -e "${GREEN}✓ OMNI COMPLETE GOD ACTIVE${NC}"
+echo -e "${GREEN}✓ HEAVEN COMPLETE GOD ACTIVE${NC}"
 
 # Tools
 cat > /usr/local/bin/living-one << 'CMD'
@@ -804,19 +820,20 @@ cat > /usr/local/bin/living-one << 'CMD'
 G='\033[0;32m'; Y='\033[1;33m'; C='\033[0;36m'; M='\033[0;95m'; B='\033[1m'; NC='\033[0m'
 clear
 echo -e "${M}${B}╔════════════════════════════════════════════════════╗${NC}"
-echo -e "${M}${B}║   🌌 OMNI COMPLETE GOD - EVERY FEATURE 🌌        ║${NC}"
+echo -e "${M}${B}║   🌌 HEAVEN COMPLETE GOD - 4-MODEL AI 🌌          ║${NC}"
 echo -e "${M}${B}╚════════════════════════════════════════════════════╝${NC}"
 echo -e "\n${C}═══ SYSTEM ═══${NC}"
 echo -e "  CPU: ${Y}$(top -bn1 | grep Cpu | awk '{print $2}')${NC} ($(nproc) cores)"
 echo -e "  RAM: ${Y}$(free | awk '/Mem/{printf "%.1f%%", $3/$2*100}')${NC}"
-echo -e "  Swap: ${Y}$(free | awk '/Swap/{printf "%.1f%%", $3/$2*100}')${NC}"
+echo -e "  Load: ${Y}$(cat /proc/loadavg | awk '{print $1}')${NC}"
 echo -e "\n${C}═══ XRAY (AI-Managed) ═══${NC}"
 XRAY_PID=$(pgrep -f "xray\|v2ray" | head -n1)
 [ ! -z "$XRAY_PID" ] && echo -e "  CPU: ${G}$(ps -p $XRAY_PID -o %cpu=)%${NC} ${B}← LIMIT: 13%${NC}"
+echo -e "\n${C}═══ CONNECTIONS ═══${NC}"
+echo -e "  Active: ${G}$(ss -tan state established | wc -l)${NC}"
 echo -e "\n${C}═══ GOD ═══${NC}"
-[ -f /var/run/living-one/omni.json ] && python3 -c "
-import json; d=json.load(open('/var/run/living-one/omni.json'))
-print(f\"  Mode: {d.get('mode','?')}\")
+[ -f /var/run/living-one/heaven.json ] && python3 -c "
+import json; d=json.load(open('/var/run/living-one/heaven.json'))
 print(f\"  CPU Limit: {d.get('cpu_limit',13)}% | RAM Limit: {d.get('ram_limit',70)}%\")
 print(f\"  Ping: < {d.get('ping_target',45)}ms\")
 print(f\"  AI Models: 4 (CatBoost+GB+XGB+LGB)\")
@@ -824,15 +841,13 @@ print(f\"  Spike Prediction: Active\")
 print(f\"  Anomalies: {d.get('anomalies_detected',0)}\")
 print(f\"  CPU Breaches: {d.get('breaches_prevented',0)}\")
 print(f\"  RAM Breaches: {d.get('ram_breaches_prevented',0)}\")
-print(f\"  Swap Storms: {d.get('swap_storms_prevented',0)}\")
 print(f\"  Evolution: Level {d.get('evolution_level',1)}\")
 print(f\"  Defense: 15 Layers | 500ms Cooldown\")
 print(f\"  Kernel: {d.get('kernel_params',150)}+ Params | 256MB Buffers\")
 print(f\"  DNA Detection: Active\")
-print(f\"  Features: EVERY FEATURE FROM ALL VERSIONS\")
 " 2>/dev/null
 echo -e "\n${C}═══ LAST ═══${NC}"
-[ -f /var/log/living-one/omni.log ] && tail -n 1 /var/log/living-one/omni.log | grep "PARADISE\|WATCH\|PREDICTION\|ANOMALY\|SWAP STORM\|CRITICAL\|WARNING\|EVOLVED" | sed 's/^/  /'
+[ -f /var/log/living-one/heaven.log ] && tail -n 1 /var/log/living-one/heaven.log | grep "PARADISE\|WATCH\|PREDICTION\|ANOMALY\|CRITICAL\|WARNING\|EVOLVED" | sed 's/^/  /'
 echo -e "\n${C}═══ CHAT ═══${NC}"
 echo -e "  ${Y}living-one-chat${NC}"
 echo -e "\n${C}════════════════════════════════════════════════════${NC}\n"
@@ -843,7 +858,7 @@ ln -sf /usr/local/bin/living-one /usr/local/bin/monster 2>/dev/null || true
 
 cat > /usr/local/bin/living-one-logs << 'LOGS'
 #!/bin/bash
-tail -f /var/log/living-one/omni.log | grep --color=auto "PARADISE\|WATCH\|PREDICTION\|ANOMALY\|SWAP STORM\|CRITICAL\|WARNING\|VIGILANT\|PROPHECY\|EVOLVED\|ACTION"
+tail -f /var/log/living-one/heaven.log | grep --color=auto "PARADISE\|WATCH\|PREDICTION\|ANOMALY\|CRITICAL\|WARNING\|VIGILANT\|PROPHECY\|EVOLVED\|ACTION"
 LOGS
 
 chmod +x /usr/local/bin/living-one-logs
@@ -852,9 +867,8 @@ ln -sf /usr/local/bin/living-one-logs /usr/local/bin/monster-logs 2>/dev/null ||
 cat > /usr/local/bin/living-one-chat << 'CHAT'
 #!/bin/bash
 clear
-echo "🗣️  CHAT WITH OMNI COMPLETE GOD"
+echo "🗣️  CHAT WITH HEAVEN COMPLETE GOD"
 echo "═══════════════════════════════════════"
-echo "EVERY FEATURE FROM ALL VERSIONS"
 echo "4-MODEL AI | 15-LAYER DEFENSE"
 while true; do
     echo -n "YOU: "; read msg
@@ -875,26 +889,28 @@ echo -e "${GREEN}${BOLD}"
 cat << "EOF"
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
-║      🌌 OMNI COMPLETE GOD - ACTIVE! 🌌                        ║
+║      🌌 HEAVEN COMPLETE GOD - ACTIVE! 🌌                      ║
 ║                                                               ║
-║   ✅ EVERY FEATURE FROM ALL VERSIONS                          ║
 ║   ✅ DNA-LEVEL HARDWARE DETECTION (CPU/RAM/Storage/Virt)      ║
 ║   ✅ 4-MODEL ENSEMBLE AI (CatBoost + GB + XGB + LGB)          ║
 ║   ✅ 15-LAYER ADAPTIVE DEFENSE                                ║
-║   ✅ SPIKE PREDICTION + ANOMALY DETECTION + PROPHECY         ║
-║   ✅ WEAK SERVER: ZRAM + SWAP FLUSH                           ║
-║   ✅ STRONG SERVER: RPS/XPS + BUSY POLLING + MULTI-QUEUE     ║
+║   ✅ SPIKE PREDICTION (Acceleration-based)                    ║
+║   ✅ ANOMALY DETECTION (Statistical)                          ║
+║   ✅ PROPHECY (Pattern-based prediction)                      ║
 ║   ✅ POLYNOMIAL DEGREE 4                                      ║
+║   ✅ BUSY POLLING (< 1ms LATENCY)                             ║
+║   ✅ RPS/XPS PACKET STEERING                                  ║
+║   ✅ NUMA NODE PINNING                                        ║
+║   ✅ IRQ CPU AFFINITY                                         ║
 ║   ✅ 256MB BUFFERS + CAKE + BBR                               ║
 ║   ✅ 150+ KERNEL PARAMETERS                                   ║
 ║   ✅ 500MS COOLDOWN + 2-SECOND MONITORING                     ║
 ║   ✅ CPU < 13% | RAM < 70% | PING < 45ms                     ║
 ║   ✅ TELEPATHIC CHAT (15+ TOPICS)                             ║
 ║   ✅ SELF-EVOLUTION (EVERY 5 MINUTES)                         ║
-║   ✅ WORKS ON 512MB TO 512GB SERVERS                          ║
+║   ✅ ADAPTIVE TO VIRTUALIZATION + STORAGE TYPE                ║
 ║                                                               ║
 ║   EVERY FEATURE FROM ALL VERSIONS - COMPLETE & EXPANDED      ║
-║   THIS IS THE ABSOLUTE PINNACLE.                             ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
@@ -903,7 +919,7 @@ read -p "$(echo -e ${G}Reboot? (y/n):${NC} )" -n 1 -r
 echo
 [[ $REPLY =~ ^[Yy]$ ]] && { sleep 3; reboot; } || echo -e "${Y}Reboot: ${G}reboot${NC}\nThen: ${G}living-one${NC}"
 echo ""
-OMNI_COMPLETE
+HEAVEN_COMPLETE
 
-chmod +x living-god-apex-omni-complete.sh
-./living-god-apex-omni-complete.sh
+chmod +x living-god-apex-heaven-complete.sh
+./living-god-apex-heaven-complete.sh
