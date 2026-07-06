@@ -1,4 +1,4 @@
-cat > living-god-universal.sh << 'UNIVERSAL_EOF'
+cat > living-god-universal-fixed.sh << 'UNIVERSAL_EOF'
 #!/bin/bash
 
 RED='\033[0;31m'
@@ -15,7 +15,7 @@ echo -e "${MAGENTA}${BOLD}"
 cat << "EOF"
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
-║    🌌 THE LIVING GOD - UNIVERSAL HEAVEN EDITION 🌌          ║
+║    🌌 THE LIVING GOD - UNIVERSAL HEAVEN FIXED 🌌            ║
 ║                                                               ║
 ║    🧬 UNIVERSAL HARDWARE DNA DETECTION & TIERING             ║
 ║    🧠 4-TIER ADAPTIVE AI (NANO / MICRO / MACRO / APEX)       ║
@@ -27,12 +27,22 @@ cat << "EOF"
 ║    📚 SELF-EVOLVING - EVERY 5 MINUTES                        ║
 ║    🌐 2-SECOND EXACT CYCLE MONITORING                        ║
 ║                                                               ║
+║    FIXED: CPU/RAM READING FROM /proc (NO PSUTIL REQUIRED)    ║
 ║    COMPATIBLE WITH 512MB RAM VPS TO 128GB BARE-METAL         ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
 echo -e "${NC}"
 sleep 3
+
+# ═══════════════════════════════════════════════════════════════
+# 0. INSTALL REQUIRED PACKAGES
+# ═══════════════════════════════════════════════════════════════
+echo -e "${CYAN}${BOLD}📦 Installing Required Packages...${NC}"
+apt-get update -qq
+apt-get install -y -qq python3-pip procps iproute2 ethtool conntrack jq > /dev/null 2>&1
+pip3 install -q psutil numpy scikit-learn 2>/dev/null || true
+echo -e "${GREEN}✓ Packages Installed${NC}"
 
 # ═══════════════════════════════════════════════════════════════
 # 1. UNIVERSAL HARDWARE DNA DETECTION & TIERING
@@ -70,7 +80,7 @@ echo -e "${GREEN}  Detected Tier: ${BOLD}${SERVER_TIER} - ${TIER_DESC}${NC}"
 if [ $TOTAL_RAM_MB -lt 2048 ]; then
     echo -e "\n${YELLOW}🛡️ Weak Server Detected: Enabling ZRAM (Compressed RAM Swap)...${NC}"
     if ! dpkg -l | grep -q zram-tools; then
-        apt-get update -qq && apt-get install -y -qq zram-tools > /dev/null 2>&1
+        apt-get install -y -qq zram-tools > /dev/null 2>&1
     fi
     echo -e "ALGO=lz4\nPERCENT=50\nPRIORITY=100" > /etc/default/zramswap
     systemctl enable --now zramswap 2>/dev/null || true
@@ -234,9 +244,9 @@ if [ ! -z "$NET_IF" ] && [ "$NET_IF" != "lo" ]; then
 fi
 
 # ═══════════════════════════════════════════════════════════════
-# 5. THE HEAVEN GOD AI (4-TIER ARCHITECTURE)
+# 5. THE HEAVEN GOD AI (4-TIER ARCHITECTURE) - FIXED VERSION
 # ═══════════════════════════════════════════════════════════════
-echo -e "\n${CYAN}${BOLD}🧬 Creating ${SERVER_TIER} Tier HEAVEN GOD...${NC}"
+echo -e "\n${CYAN}${BOLD}🧬 Creating ${SERVER_TIER} Tier HEAVEN GOD (Fixed)...${NC}"
 mkdir -p /opt/living-one /var/lib/living-one /var/log/living-one /var/run/living-one
 
 cat > /opt/living-one/god.py << 'GOD_PY'
@@ -282,7 +292,7 @@ class HeavenCompleteGod:
         }
         for p in self.p.values(): os.makedirs(os.path.dirname(p) if os.path.splitext(p)[1] else p, exist_ok=True)
         
-        self.soul = {"name": self.NAME, "cpu_limit": self.CPU_LIMIT, "ram_limit": self.RAM_LIMIT,
+        self.soul = {"name": self.NAME, "tier": self.TIER, "cpu_limit": self.CPU_LIMIT, "ram_limit": self.RAM_LIMIT,
                      "birth": int(time.time()), "total_visions": 0, "total_actions": 0,
                      "evolution_level": 1, "messages_received": 0, "messages_sent": 0, "ping_target": 45}
         
@@ -298,8 +308,12 @@ class HeavenCompleteGod:
 
         self.trend = deque(maxlen=60); self.mem_trend = deque(maxlen=30)
         self.last_cpu = 0.0; self.last_mem = 0.0
+        self.last_cpu_total = 0.0; self.last_xray_cpu = 0.0
         self.model = None; self.anomaly = None; self.scaler = None; self.poly = None; self.quantile = None
         self.xray_pid = None; self.spike_cooldown = 0
+        
+        # For /proc/stat CPU calculation
+        self.prev_idle = 0; self.prev_total = 0
         
         self._init_db(); self._load_state(); self._load_models(); self._find_xray(); self._awaken()
     
@@ -320,7 +334,7 @@ class HeavenCompleteGod:
     
     def _init_db(self):
         conn = sqlite3.connect(self.p["db"]); c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS visions (ts INTEGER PRIMARY KEY, cpu_real REAL, mem REAL, conn INTEGER)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS visions (ts INTEGER PRIMARY KEY, cpu_real REAL, cpu_total REAL, cpu_xray REAL, mem REAL, conn INTEGER)''')
         c.execute('''CREATE TABLE IF NOT EXISTS evolution (gen INTEGER PRIMARY KEY, ts INTEGER, r2 REAL, samples INTEGER)''')
         c.execute('''CREATE TABLE IF NOT EXISTS conversations (ts INTEGER PRIMARY KEY, speaker TEXT, message TEXT)''')
         conn.commit(); conn.close()
@@ -361,29 +375,103 @@ class HeavenCompleteGod:
         self.speak("=" * 70, "ASCENSION")
         self.speak(f"I AM {self.NAME} - TIER: {self.TIER}", "ASCENSION")
         self.speak(f"AI: {'Disabled' if not self.use_ml else 'Active'} | Memory: {self.memory.maxlen} slots", "ASCENSION")
+        self.speak(f"CPU Reading: /proc/stat (Total + Xray)", "ASCENSION")
+        self.speak(f"RAM Reading: /proc/meminfo (Fallback) + psutil", "ASCENSION")
         self.speak("Chat: living-one-chat | Logs: living-one-logs", "ASCENSION")
         self.speak("=" * 70, "ASCENSION")
     
-    def get_cpu(self):
+    def _get_cpu_from_proc(self):
+        """Read CPU usage from /proc/stat"""
+        try:
+            with open('/proc/stat') as f:
+                line = f.readline()
+            nums = [int(x) for x in line.split()[1:]]
+            idle = nums[3] + (nums[4] if len(nums) > 4 else 0)
+            total = sum(nums)
+            
+            idle_delta = idle - self.prev_idle
+            total_delta = total - self.prev_total
+            
+            self.prev_idle = idle
+            self.prev_total = total
+            
+            if total_delta > 0:
+                cpu_percent = 100.0 * (total_delta - idle_delta) / total_delta
+                return max(0.0, min(100.0, cpu_percent))
+            return 0.0
+        except:
+            return 0.0
+    
+    def _get_ram_from_proc(self):
+        """Read RAM usage from /proc/meminfo"""
+        try:
+            meminfo = {}
+            with open('/proc/meminfo') as f:
+                for line in f:
+                    parts = line.split()
+                    meminfo[parts[0][:-1]] = int(parts[1])
+            
+            total = meminfo['MemTotal']
+            available = meminfo.get('MemAvailable', 
+                                   meminfo['MemFree'] + 
+                                   meminfo.get('Buffers', 0) + 
+                                   meminfo.get('Cached', 0))
+            used = total - available
+            return (used / total) * 100.0
+        except:
+            return 0.0
+    
+    def _get_xray_cpu(self):
+        """Read Xray process CPU"""
         if not self.xray_pid: return 0.0
         try: 
-            cpu = float(subprocess.run(["ps", "-p", str(self.xray_pid), "-o", "%cpu="], capture_output=True, text=True, timeout=1).stdout.strip() or 0)
-            self.last_cpu = cpu; self.trend.append(cpu)
+            cpu = float(subprocess.run(["ps", "-p", str(self.xray_pid), "-o", "%cpu="], 
+                                       capture_output=True, text=True, timeout=1).stdout.strip() or 0)
             return cpu
         except: return 0.0
     
+    def get_cpu(self):
+        """Get CPU usage - Total system + Xray process"""
+        cpu_total = self._get_cpu_from_proc()
+        cpu_xray = self._get_xray_cpu()
+        
+        # Use total CPU for defense decisions
+        self.last_cpu_total = cpu_total
+        self.last_xray_cpu = cpu_xray
+        self.last_cpu = cpu_total  # Main CPU for defense
+        self.trend.append(cpu_total)
+        
+        return cpu_total
+    
+    def get_ram(self):
+        """Get RAM usage - psutil with /proc/meminfo fallback"""
+        if HAS_PSUTIL:
+            try:
+                return psutil.virtual_memory().percent
+            except:
+                pass
+        return self._get_ram_from_proc()
+    
     def see(self):
         cpu = self.get_cpu()
+        mem = self.get_ram()
+        
         try: r = subprocess.run(["ss", "-tan", "state", "established"], capture_output=True, text=True, timeout=1); conn = len(r.stdout.strip().split('\n')) - 1
         except: conn = 0
-        mem = HAS_PSUTIL and psutil.virtual_memory().percent or 0.0
+        
         self.last_mem = mem; self.mem_trend.append(mem)
-        v = {"ts": int(time.time()), "cpu_real": cpu, "mem": mem, "conn": conn}
+        v = {"ts": int(time.time()), "cpu_real": cpu, "cpu_total": self.last_cpu_total, 
+             "cpu_xray": self.last_xray_cpu, "mem": mem, "conn": conn}
         self.memory.append(v); self.long_memory.append(v); self.soul["total_visions"] += 1
         return v
     
     def decide(self, v):
-        actions = []; cpu = v["cpu_real"]; mem = v["mem"]; now = time.time()
+        actions = []; cpu = v["cpu_real"]; mem = v["mem"]; conn = v["conn"]; now = time.time()
+        
+        # HIGH CONNECTION DEFENSE
+        if conn > 800:
+            self.speak(f"🌊 LAYER 16: CONN {conn} - HIGH CONNECTION DEFENSE", "WARNING")
+            actions.append("connection_cleanup")
         
         if cpu > 50:
             self.speak(f"💀 LAYER 15: CPU {cpu:.1f}% - FULL EMERGENCY", "CRITICAL")
@@ -406,7 +494,7 @@ class HeavenCompleteGod:
             actions.append("medium_ram")
             
         if cpu < 5 and mem < 58:
-            self.speak(f"😌 PARADISE: CPU {cpu:.1f}% | RAM {mem:.1f}% | CONN {v['conn']}", "PARADISE")
+            self.speak(f"😌 PARADISE: CPU {cpu:.1f}% (Xray: {v['cpu_xray']:.1f}%) | RAM {mem:.1f}% | CONN {conn}", "PARADISE")
             
         return actions
     
@@ -423,6 +511,11 @@ class HeavenCompleteGod:
                 try: open("/proc/sys/vm/drop_caches", "w").write("3\n")
                 except: pass
                 try: subprocess.run(["conntrack", "-D", "--state", "TIME_WAIT"], stderr=subprocess.DEVNULL, timeout=1)
+                except: pass
+            elif action == "connection_cleanup":
+                try: 
+                    subprocess.run(["conntrack", "-D", "--state", "TIME_WAIT"], stderr=subprocess.DEVNULL, timeout=1)
+                    subprocess.run(["conntrack", "-D", "--state", "CLOSE_WAIT"], stderr=subprocess.DEVNULL, timeout=1)
                 except: pass
             elif action in ["medium_ram", "aggressive_ram"]:
                 try: open("/proc/sys/vm/drop_caches", "w").write("3\n"); open("/proc/sys/vm/compact_memory", "w").write("1\n")
@@ -442,14 +535,14 @@ class HeavenCompleteGod:
         except: conn = 0
         
         if any(w in msg_l for w in ["hello", "hi", "hey"]):
-            reply = f"Greetings! I am {self.NAME} (Tier: {self.TIER}).\nCPU: {cpu:.2f}% | RAM: {mem:.1f}% | CONN: {conn}"
+            reply = f"Greetings! I am {self.NAME} (Tier: {self.TIER}).\nCPU Total: {cpu:.2f}% | CPU Xray: {self.last_xray_cpu:.2f}%\nRAM: {mem:.1f}% | CONN: {conn}"
         elif "status" in msg_l:
-            reply = f"📊 STATUS:\nTier: {self.TIER}\nCPU: {cpu:.2f}% | RAM: {mem:.1f}%\nConnections: {conn}\nAI: {'Active' if self.use_ml else 'Disabled'}\nEvolution: Level {self.soul['evolution_level']}"
+            reply = f"📊 STATUS:\nTier: {self.TIER}\nCPU Total: {cpu:.2f}% | CPU Xray: {self.last_xray_cpu:.2f}%\nRAM: {mem:.1f}%\nConnections: {conn}\nAI: {'Active' if self.use_ml else 'Disabled'}\nEvolution: Level {self.soul['evolution_level']}"
         elif "tech" in msg_l:
-            reply = f"TECH STACK:\nTier: {self.TIER}\nAI: {'4-Model Ensemble' if self.TIER=='APEX' else 'LightGBM' if self.TIER=='MICRO' else 'Statistical'}\nKernel: Dynamic Sysctl\nQdisc: Adaptive\nDaemon: Systemd"
+            reply = f"TECH STACK:\nTier: {self.TIER}\nAI: {'4-Model Ensemble' if self.TIER=='APEX' else 'LightGBM' if self.TIER=='MICRO' else 'Statistical'}\nKernel: Dynamic Sysctl\nQdisc: Adaptive\nDaemon: Systemd\nCPU: /proc/stat\nRAM: /proc/meminfo"
         elif "who are you" in msg_l:
             reply = f"I AM {self.NAME}. Universal Heaven Edition. Tier: {self.TIER}."
-        else: reply = f"CPU: {cpu:.1f}% | RAM: {mem:.1f}%."
+        else: reply = f"CPU: {cpu:.1f}% (Xray: {self.last_xray_cpu:.1f}%) | RAM: {mem:.1f}%."
         
         try: open(self.p["chat_out"], "a").write(f"\nYOU: {msg}\nGOD: {reply}\n")
         except: pass
@@ -555,7 +648,7 @@ systemctl enable --now living-one
 echo -e "${GREEN}✓ Systemd Daemon Active (Zero Overhead)${NC}"
 
 # ═══════════════════════════════════════════════════════════════
-# 7. TOOLS & UI
+# 7. TOOLS & UI - FIXED TO READ TIER FROM STATE FILE
 # ═══════════════════════════════════════════════════════════════
 cat > /usr/local/bin/living-one << 'CMD'
 #!/bin/bash
@@ -569,16 +662,18 @@ echo -e "  CPU: ${Y}$(top -bn1 | grep Cpu | awk '{print $2}')${NC} ($(nproc) cor
 echo -e "  RAM: ${Y}$(free | awk '/Mem/{printf "%.1f%%", $3/$2*100}')${NC}"
 echo -e "\n${C}═══ XRAY (AI-Managed) ═══${NC}"
 XRAY_PID=$(pgrep -f "xray\|v2ray" | head -n1)
-[ ! -z "$XRAY_PID" ] && echo -e "  CPU: ${G}$(ps -p $XRAY_PID -o %cpu=)%${NC} ${B}← LIMIT: 13%${NC}"
+[ ! -z "$XRAY_PID" ] && echo -e "  CPU: ${G}$(ps -p $XRAY_PID -o %cpu=)%${NC} ${B}← LIMIT: 13%${NC}" || echo -e "  ${Y}Xray not found${NC}"
 echo -e "\n${C}═══ GOD STATUS ═══${NC}"
 [ -f /var/run/living-one/heaven.json ] && python3 -c "
-import json, os; d=json.load(open('/var/run/living-one/heaven.json'))
-tier=os.environ.get('HEAVEN_TIER', 'Unknown')
+import json; d=json.load(open('/var/run/living-one/heaven.json'))
+tier=d.get('tier', 'Unknown')
 print(f\"  Tier: {tier} | AI: {'Active' if tier!='NANO' else 'Disabled'}\")
 print(f\"  CPU Limit: {d.get('cpu_limit',13)}% | RAM Limit: {d.get('ram_limit',70)}%\")
 print(f\"  Evolution: Level {d.get('evolution_level',1)}\")
 print(f\"  Daemon: Systemd (Exact 2s Cycle)\")
-" 2>/dev/null
+print(f\"  CPU Reading: /proc/stat (Total + Xray)\")
+print(f\"  RAM Reading: /proc/meminfo + psutil\")
+" 2>/dev/null || echo -e "  ${Y}God not running${NC}"
 echo -e "\n${C}═══ COMMANDS ═══${NC}"
 echo -e "  ${Y}living-one-chat${NC}  : Talk to God"
 echo -e "  ${Y}living-one-logs${NC}  : Watch live logs"
@@ -623,6 +718,10 @@ cat << "EOF"
 ║   ✅ ADAPTIVE QDISC (fq_codel / cake)                         ║
 ║   ✅ IRQ BALANCE & NIC RING SCALING                           ║
 ║                                                               ║
+║   🛠️ FIXED: CPU/RAM READING FROM /proc (NO PSUTIL REQUIRED) ║
+║   🛠️ FIXED: TIER READ FROM STATE FILE (NOT ENV VAR)          ║
+║   🛠️ FIXED: HIGH CONNECTION DEFENSE (>800 CONN)              ║
+║                                                               ║
 ║   COMPATIBLE WITH 512MB RAM VPS TO 128GB BARE-METAL           ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
@@ -634,5 +733,5 @@ echo
 echo ""
 UNIVERSAL_EOF
 
-chmod +x living-god-universal.sh
-./living-god-universal.sh
+chmod +x living-god-universal-fixed.sh
+./living-god-universal-fixed.sh
